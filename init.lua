@@ -364,6 +364,16 @@ minetest.register_chatcommand('mrkr_import', {
     end
 })
 
+-- Upload markers to the advmarkers server-side mod.
+minetest.register_chatcommand('mrkr_upload', {
+    params      = '',
+    description = 'Uploads all markers to this server\'s advmarkers storage.',
+    func = function(param)
+        local data = advmarkers.export()
+        minetest.run_server_chatcommand('mrkr_import', data)
+    end
+})
+
 -- Chat channels .coords integration.
 -- You do not need to have chat channels installed for this to work.
 if not minetest.registered_on_receiving_chat_message then
