@@ -1,8 +1,8 @@
 # advmarkers
 
-A marker/waypoint CSM for Minetest, designed for use with the [marker] mod.
+A marker/waypoint CSM for Minetest, designed for use with the (now-defunct) marker mod.
 
-To display markers, the server currently needs the [marker] mod installed,
+To display markers, the server currently needs the advmarkers server-side mod (or the marker mod) installed,
 otherwise "command not found" errors will be displayed, as CSMs cannot currently
 create HUDs on their own.
 
@@ -15,7 +15,7 @@ create HUDs on their own.
  - `.mrkr_export`: Exports your markers to an advmarkers string. Remember to not modify the text before copying it. You can use `.mrkr_export old` if you want an export string compatible with older versions of advmarkers (it should start with `M` instead of `J`). The old format will probably not work nicely with the planned server-side mod, however.
  - `.mrkr_import`: Imports your markers from an advmarkers string (`.mrkr_import <advmarkers string>`). Any markers with the same name will not be overwritten, and if they do not have the same co-ordinates, `_` will be appended to the imported one.
  - `.mrkr_upload`: Uploads your markers to your current server's advmarkers
-    [SSM].
+    [server-side mod].
  - `.mrkrthere`: Sets a marker at the last `.coords` position.
 
 If you die, a marker is automatically added at your death position, and will
@@ -29,7 +29,6 @@ advmarkers temporarily stores this position, and you can set a temporary marker
 at the `.coords` position with `.mrkrthere`, or add a permanent marker with
 `.add_mrkr there Marker name`.
 
-[marker]: https://github.com/Billy-S/kingdoms_game/blob/master/mods/marker
 [GitHub]: https://github.com/luk3yx/minetest-chat_channels
 [GitLab]: https://gitlab.com/luk3yx/minetest-chat_channels
-[SSM]:    https://gitlab.com/luk3yx/minetest-advmarkers-ssm
+[server-side mod]: https://git.minetest.land/luk3yx/advmarkers
