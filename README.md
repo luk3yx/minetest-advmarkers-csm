@@ -1,5 +1,16 @@
 # advmarkers
 
+## Warning
+
+This is mostly useless now, as this requires a `/mrkr` command to exist on the
+server. You probably want the (nicer)
+[non-CSM](https://git.minetest.land/luk3yx/advmarkers) mod. *This CSM does not
+co-operate with the server-side mod except for the fact that it provides a
+`/mrkr` command, if you play on a server with the server-side mod you don't
+need this.*
+
+## Original README
+
 A marker/waypoint CSM for Minetest, designed for use with the (now-defunct) marker mod.
 
 To display markers, the server currently needs the advmarkers server-side mod (or the marker mod) installed,
