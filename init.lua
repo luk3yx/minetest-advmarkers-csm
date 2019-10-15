@@ -95,7 +95,7 @@ function advmarkers.import(s)
         local success, msg = pcall(minetest.decompress, s)
         if not success then return end
         if ver == 'M' then
-            s = minetest.deserialize(msg)
+            s = minetest.deserialize(msg, true)
         else
             s = minetest.parse_json(msg)
         end
