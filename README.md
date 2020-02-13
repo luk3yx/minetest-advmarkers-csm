@@ -2,20 +2,20 @@
 
 ## Warning
 
-This is mostly useless now, as this requires a `/mrkr` command to exist on the
-server. You probably want the (nicer)
-[non-CSM](https://git.minetest.land/luk3yx/advmarkers) mod. *This CSM does not
-co-operate with the server-side mod except for the fact that it provides a
-`/mrkr` command, if you play on a server with the server-side mod you don't
-need this.*
+This is mostly useless if you use Minetest 0.4, as without the CSM HUD API this
+CSM requires a `/mrkr` command to exist on the server. You probably want the
+(nicer) [non-CSM](https://git.minetest.land/luk3yx/advmarkers) mod instead.
+
+*This CSM does not co-operate with the server-side mod except for the fact that
+it provides a `/mrkr` command, if you play on a server with the server-side mod
+you don't need this.*
 
 ## Original README
 
 A marker/waypoint CSM for Minetest, designed for use with the (now-defunct) marker mod.
 
-To display markers, the server currently needs the advmarkers server-side mod (or the marker mod) installed,
-otherwise "command not found" errors will be displayed, as CSMs cannot currently
-create HUDs on their own.
+This CSM works by itself on Minetest 5.0.0+, and with the server-side mod
+installed on Minetest 0.4.
 
 ## How to use
 
@@ -28,6 +28,7 @@ create HUDs on their own.
  - `.mrkr_upload`: Uploads your markers to your current server's advmarkers
     [server-side mod].
  - `.mrkrthere`: Sets a marker at the last `.coords` position.
+ - `.clrmrkr`: Hides the currently displayed waypoint.
 
 If you die, a marker is automatically added at your death position, and will
 update the last `.coords` position.
