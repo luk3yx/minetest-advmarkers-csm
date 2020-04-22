@@ -40,6 +40,7 @@ function advmarkers.set_hud_pos(pos, title)
             not minetest.localplayer.hud_change then
         minetest.run_server_chatcommand('mrkr', tostring(pos.x) .. ' ' ..
             tostring(pos.y) .. ' ' .. tostring(pos.z))
+        return
     end
 
     if not title then
