@@ -1,8 +1,7 @@
 --
 -- Minetest advmarkers CSM
 --
--- Needs the https://github.com/Billy-S/kingdoms_game/tree/master/mods/marker
---  mod to be able to display HUD elements
+-- Copyright © 2019-2020 by luk3yx
 --
 
 advmarkers = {}
@@ -11,6 +10,7 @@ advmarkers = {}
 local storage = minetest.get_mod_storage()
 
 -- Convert positions to/from strings
+local abs, type = math.abs, type
 local function pos_to_string(pos)
     if type(pos) == 'table' then
         pos = minetest.pos_to_string(vector.round(pos))
@@ -20,11 +20,15 @@ local function pos_to_string(pos)
     end
 end
 
+local function dir_ok(n)
+    return type(n) == 'number' and abs(n) < 31000
+end
 local function string_to_pos(pos)
     if type(pos) == 'string' then
         pos = minetest.string_to_pos(pos)
     end
-    if type(pos) == 'table' then
+    if type(pos) == 'table' and dir_ok(pos.x) and dir_ok(pos.y) and
+            dir_ok(pos.z) then
         return vector.round(pos)
     end
 end
@@ -216,7 +220,7 @@ function advmarkers.get_chatcommand_pos(pos)
         pos = minetest.localplayer:get_pos()
     elseif pos == 't' or pos == 'there' then
         if not advmarkers.last_coords then
-            return false, 'No-one has used ".coords" and you have not died!'
+            return false, 'No "there" position found!'
         end
         pos = advmarkers.last_coords
     else
@@ -445,17 +449,17 @@ minetest.register_chatcommand('mrkr_upload', {
 
 register_chatcommand_alias('mrkr_export', 'wp_upload', 'waypoint_upload')
 
--- Chat channels .coords integration.
--- You do not need to have chat channels installed for this to work.
+-- Find co-ordinates sent in chat messages
 if not minetest.registered_on_receiving_chat_message then
     minetest.registered_on_receiving_chat_message =
         minetest.registered_on_receiving_chat_messages
 end
 
 table.insert(minetest.registered_on_receiving_chat_message, 1, function(msg)
-    local s, e = msg:find('Current Position: %-?[0-9]+, %-?[0-9]+, %-?[0-9]+%.')
-    if s and e then
-        local pos = string_to_pos(msg:sub(s + 18, e - 1))
+    if msg:byte(1) == 1 or #msg > 1000 then return end
+    local raw_pos = msg:match('%-?[0-9%.]+, *%-?[0-9%.]+, *%-?[0-9%.]+')
+    if raw_pos then
+        local pos = string_to_pos(raw_pos)
         if pos then
             advmarkers.last_coords = pos
         end
@@ -465,10 +469,10 @@ end)
 -- Add '.mrkrthere'
 minetest.register_chatcommand('mrkrthere', {
     params      = '',
-    description = 'Adds a (temporary) waypoint at the last ".coords" position.',
+    description = 'Adds a (temporary) waypoint at the "there" position.',
     func = function(param)
         if not advmarkers.last_coords then
-            return false, 'No-one has used ".coords" and you have not died!'
+            return false, 'No "there" position found!'
         elseif not advmarkers.set_hud_pos(advmarkers.last_coords) then
             return false, 'Error setting the waypoint!'
         end
